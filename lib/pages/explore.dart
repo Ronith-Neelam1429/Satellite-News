@@ -51,7 +51,7 @@ class _ExplorePageState extends State<ExplorePage>
               ),
             ),
             SearchBarComp(),
-            SizedBox(height: 5),
+            SizedBox(height: 1),
             Expanded(
               child: TabBarComponent(
                 tabController: _tabController,

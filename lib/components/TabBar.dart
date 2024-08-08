@@ -27,20 +27,19 @@ class _TabBarComponentState extends State<TabBarComponent> {
   Widget _buildSideScrollingContainers() {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        double containerWidth =
-            constraints.maxWidth * 0.8; // 80% of screen width
+        double containerWidth = constraints.maxWidth * 0.8;
         return Container(
           height: 150,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 5, // You can adjust this number or make it dynamic
+            itemCount: 5,
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.only(
                   left: index == 0 ? 16 : 8,
                   right: 8,
-                  top: 8,
-                  bottom: 8,
+                  top: 28,
+                  bottom: 0,
                 ),
                 child: Container(
                   width: containerWidth,
@@ -75,25 +74,33 @@ class _TabBarComponentState extends State<TabBarComponent> {
             labelColor: Colors.white,
             unselectedLabelColor: Color.fromARGB(255, 128, 127, 136),
             tabAlignment: TabAlignment.start,
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            indicator: BoxDecoration(), 
+            padding: EdgeInsets.symmetric(horizontal: 6),
+            indicator: BoxDecoration(),
             dividerColor: Colors.transparent,
+            labelPadding:
+                EdgeInsets.zero, // Remove default padding between tabs
             tabs: List.generate(
               newsCategories.length,
               (index) => Tab(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: widget.tabController.index == index
-                        ? Color.fromARGB(255, 113, 100, 178)
-                        : Theme.of(context).colorScheme.tertiary,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    newsCategories[index].name,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      right: 15),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8), 
+                    decoration: BoxDecoration(
+                      color: widget.tabController.index == index
+                          ? Color.fromARGB(255, 113, 100, 178)
+                          : Theme.of(context).colorScheme.tertiary,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      newsCategories[index].name,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -118,12 +125,10 @@ class _TabBarComponentState extends State<TabBarComponent> {
                       ),
                     ),
                     SliverFillRemaining(
-                      child: Center(
-                        child: Text(
-                          "This is the ${category.name} category",
-                          style: Theme.of(context).textTheme.headlineSmall,
-                          textAlign: TextAlign.center,
-                        ),
+                      child: Text(
+                        "This is the ${category.name} category",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ],
@@ -132,15 +137,42 @@ class _TabBarComponentState extends State<TabBarComponent> {
                 return CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
-                      child: _buildSideScrollingContainers(),
-                    ),
-                    SliverToBoxAdapter(
-                      child: Center(
-                        child: Text(
-                          "This is the ${category.name} category (News Tiles)",
-                          style: Theme.of(context).textTheme.headlineSmall,
-                          textAlign: TextAlign.center,
-                        ),
+                      child: Column(
+                        children: [
+                          Divider(
+                            color: Theme.of(context).colorScheme.tertiary,
+                            thickness: 3,
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 12.0, left: 16),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(1),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: const Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Icon(Icons.trending_up),
+                                    ),
+                                    SizedBox(width: 7),
+                                    Text(
+                                      "Trending on Satellite🔥",
+                                      style: TextStyle(fontSize: 17),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
                       ),
                     ),
                     // Replace this with your actual news tiles
